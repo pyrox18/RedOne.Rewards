@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RedOne.Rewards.Domain\RedOne.Rewards.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
