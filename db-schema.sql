@@ -52,3 +52,26 @@ CREATE TABLE Reward(
     ExpiryDate TIMESTAMP NOT NULL,
     MinimumMemberLevelId INT NOT NULL REFERENCES MemberLevel(Id)
 );
+
+-- Stored procedures
+
+DELIMITER $$
+
+CREATE PROCEDURE GetUserRewardInfo(
+	IN PhoneNumber VARCHAR(12)
+)
+BEGIN
+	DECLARE TotalPoints INT DEFAULT 0;
+    DECLARE MemberLevel INT DEFAULT 0;
+    DECLARE MemberLevelText VARCHAR(255);
+
+	SELECT TotalRewardPoints INTO TotalPoints FROM CustomerUser cu WHERE cu.PhoneNumber = PhoneNumber;
+    SELECT `Level`, LevelText INTO MemberLevel, MemberLevelText FROM MemberLevel
+    WHERE TotalPoints >= Threshold
+    ORDER BY Threshold DESC
+    LIMIT 1;
+    
+    SELECT TotalPoints, MemberLevel, MemberLevelText;
+END $$
+
+DELIMITER ;
