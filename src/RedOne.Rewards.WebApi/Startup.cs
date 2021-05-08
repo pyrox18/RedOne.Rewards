@@ -10,6 +10,7 @@ using RedOne.Rewards.Application.Interfaces;
 using RedOne.Rewards.Application.Services;
 using RedOne.Rewards.Domain.Interfaces;
 using RedOne.Rewards.Infrastructure.Repositories;
+using RedOne.Rewards.WebApi.Authentication;
 using RedOne.Rewards.WebApi.Configuration;
 using System.Text;
 
@@ -29,15 +30,18 @@ namespace RedOne.Rewards.WebApi
         {
             // Repositories
             services.AddScoped<IAdminUserRepository, AdminUserRepository>();
+            services.AddScoped<IConsumerUserRepository, ConsumerUserRepository>();
 
             // Application services
             services.AddScoped<IAdminUserService, AdminUserService>();
+            services.AddScoped<IConsumerUserService, ConsumerUserService>();
 
             // App settings
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
             // JWT authentication
+            services.AddScoped<ITokenService, JwtTokenService>();
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.JwtSecret);
             services.AddAuthentication(x =>

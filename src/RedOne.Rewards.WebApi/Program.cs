@@ -21,8 +21,12 @@ namespace RedOne.Rewards.WebApi
                 using (var scope = host.Services.CreateScope())
                 {
                     var services = scope.ServiceProvider;
+
                     var adminUserService = services.GetRequiredService<IAdminUserService>();
                     await adminUserService.SeedAdminUserDataAsync();
+
+                    var consumerUserService = services.GetRequiredService<IConsumerUserService>();
+                    await consumerUserService.SeedConsumerUserDataAsync();
                 }
 
                 Console.ForegroundColor = ConsoleColor.Green;

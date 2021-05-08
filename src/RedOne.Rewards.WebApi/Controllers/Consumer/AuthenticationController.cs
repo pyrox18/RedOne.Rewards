@@ -7,16 +7,18 @@ using RedOne.Rewards.WebApi.Authentication;
 using RedOne.Rewards.WebApi.Dtos;
 using System.Threading.Tasks;
 
-namespace RedOne.Rewards.WebApi.Controllers.Admin
+namespace RedOne.Rewards.WebApi.Controllers.Consumer
 {
-    public class AuthenticationController : BaseAdminApiController
+    public class AuthenticationController : BaseConsumerApiController
     {
-        private readonly IAdminUserService _adminUserService;
+        private readonly IConsumerUserService _consumerUserService;
         private readonly ITokenService _tokenService;
 
-        public AuthenticationController(IAdminUserService adminUserService, ITokenService tokenService)
+        public AuthenticationController(
+            IConsumerUserService consumerUserService,
+            ITokenService tokenService)
         {
-            _adminUserService = adminUserService;
+            _consumerUserService = consumerUserService;
             _tokenService = tokenService;
         }
 
@@ -24,15 +26,15 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
         [HttpPost("authenticate")]
         [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> AuthenticateUser([FromBody] AuthenticateAdminUserDto dto)
+        public async Task<IActionResult> AuthenticateUser([FromBody] AuthenticateConsumerUserDto dto)
         {
-            var isAuthenticated = await _adminUserService.AuthenticateUserAsync(dto);
+            var isAuthenticated = await _consumerUserService.AuthenticateUserAsync(dto);
             if (!isAuthenticated)
             {
                 return new JsonResult(new ErrorDto("Invalid credentials")) { StatusCode = StatusCodes.Status401Unauthorized };
             }
 
-            var token = _tokenService.GenerateAdminToken(dto.Username);
+            var token = _tokenService.GenerateConsumerToken(dto.PhoneNumber);
             return new JsonResult(new TokenDto(token));
         }
     }
