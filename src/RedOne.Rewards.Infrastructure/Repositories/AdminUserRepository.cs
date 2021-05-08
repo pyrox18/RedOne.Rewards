@@ -25,5 +25,19 @@ namespace RedOne.Rewards.Infrastructure.Repositories
                 });
             }
         }
+
+        public async Task InsertAsync(string username, string hashedPassword)
+        {
+            var query = @"INSERT INTO AdminUser(Username, `Password`) VALUES (@Username, @Password)";
+
+            using (var connection = DbConnection)
+            {
+                await connection.ExecuteAsync(query, new
+                {
+                    Username = username,
+                    Password = hashedPassword
+                });
+            }
+        }
     }
 }
