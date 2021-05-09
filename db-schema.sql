@@ -74,4 +74,13 @@ BEGIN
     SELECT TotalPoints, MemberLevel, MemberLevelText;
 END $$
 
+CREATE PROCEDURE GetConsumerUserUsage(
+	IN PhoneNumber VARCHAR(12)
+)
+BEGIN
+	SELECT u.Title, u.CurrentUsage, u.UsageLimit, u.Unit FROM `Usage` u
+	JOIN ConsumerUser cu ON cu.Id = u.ConsumerUserId
+	WHERE cu.PhoneNumber = PhoneNumber;
+END $$
+
 DELIMITER ;
