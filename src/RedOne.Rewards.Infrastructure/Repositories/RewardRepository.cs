@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using Dapper;
+using RedOne.Rewards.Domain.Models;
+using System.Data;
 
 namespace RedOne.Rewards.Infrastructure.Repositories
 {
@@ -67,6 +69,17 @@ namespace RedOne.Rewards.Infrastructure.Repositories
             using (var connection = DbConnection)
             {
                 await connection.ExecuteAsync(query, new { Id = id });
+            }
+        }
+
+        public async Task<ConsumerUserRewardInfoSpModel> GetConsumerUserRewardInfoAsync(string phoneNumber)
+        {
+            using (var connection = DbConnection)
+            {
+                return await connection.QuerySingleOrDefaultAsync<ConsumerUserRewardInfoSpModel>(
+                    "GetUserRewardInfo",
+                    new { PhoneNumber = phoneNumber },
+                    commandType: CommandType.StoredProcedure);
             }
         }
     }

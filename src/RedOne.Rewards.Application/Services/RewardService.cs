@@ -49,5 +49,12 @@ namespace RedOne.Rewards.Application.Services
 
             await _rewardRepository.DeleteByIdAsync(id);
         }
+
+        public async Task<ConsumerUserRewardInfoDto> GetConsumerUserRewardInfoAsync(string phoneNumber)
+        {
+            var result = await _rewardRepository.GetConsumerUserRewardInfoAsync(phoneNumber);
+
+            return new ConsumerUserRewardInfoDto(result);
+        }
     }
 }

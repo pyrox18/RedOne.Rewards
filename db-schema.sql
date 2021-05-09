@@ -65,7 +65,7 @@ BEGIN
     DECLARE MemberLevel INT DEFAULT 0;
     DECLARE MemberLevelText VARCHAR(255);
 
-	SELECT TotalRewardPoints INTO TotalPoints FROM CustomerUser cu WHERE cu.PhoneNumber = PhoneNumber;
+	SELECT TotalRewardPoints INTO TotalPoints FROM ConsumerUser cu WHERE cu.PhoneNumber = PhoneNumber;
     SELECT `Level`, LevelText INTO MemberLevel, MemberLevelText FROM MemberLevel
     WHERE TotalPoints >= Threshold
     ORDER BY Threshold DESC

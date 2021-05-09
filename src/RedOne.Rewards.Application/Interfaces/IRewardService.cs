@@ -9,5 +9,6 @@ namespace RedOne.Rewards.Application.Interfaces
         Task<IEnumerable<RewardDto>> GetRewardsAsync(bool sortByMemberLevel = false);
         Task<RewardDto> CreateRewardAsync(CreateRewardDto dto);
         Task DeleteRewardAsync(int id);
+        Task<ConsumerUserRewardInfoDto> GetConsumerUserRewardInfoAsync(string phoneNumber);
     }
 }
