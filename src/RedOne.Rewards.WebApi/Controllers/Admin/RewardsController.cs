@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RedOne.Rewards.Application.Dtos;
 using RedOne.Rewards.Application.Interfaces;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,6 +21,7 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
         [ProducesResponseType(typeof(IEnumerable<RewardDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(Tags = new[] { "Rewards (Admin)" })]
         public async Task<IActionResult> RewardsList()
         {
             var result = await _rewardService.GetRewardsAsync();
@@ -32,6 +34,7 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(Tags = new[] { "Rewards (Admin)" })]
         public async Task<IActionResult> CreateReward([FromBody] CreateRewardDto dto)
         {
             var result = await _rewardService.CreateRewardAsync(dto);
@@ -44,6 +47,7 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(Tags = new[] { "Rewards (Admin)" })]
         public async Task<IActionResult> DeleteReward([FromRoute] int id)
         {
             await _rewardService.DeleteRewardAsync(id);
