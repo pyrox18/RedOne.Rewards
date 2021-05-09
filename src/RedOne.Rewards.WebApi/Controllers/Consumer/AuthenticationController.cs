@@ -5,6 +5,7 @@ using RedOne.Rewards.Application.Dtos;
 using RedOne.Rewards.Application.Interfaces;
 using RedOne.Rewards.WebApi.Authentication;
 using RedOne.Rewards.WebApi.Dtos;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Threading.Tasks;
 
 namespace RedOne.Rewards.WebApi.Controllers.Consumer
@@ -26,6 +27,7 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
         [HttpPost("authenticate")]
         [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status401Unauthorized)]
+        [SwaggerOperation(Tags = new[] { "Authentication (Consumer)" })]
         public async Task<IActionResult> AuthenticateUser([FromBody] AuthenticateConsumerUserDto dto)
         {
             var isAuthenticated = await _consumerUserService.AuthenticateUserAsync(dto);

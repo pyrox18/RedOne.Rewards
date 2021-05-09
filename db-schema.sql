@@ -31,7 +31,7 @@ CREATE TABLE Banner(
 	Id INT PRIMARY KEY AUTO_INCREMENT,
     PostCoverUrl TEXT NOT NULL,
     PostTitle VARCHAR(255) NOT NULL,
-    PostShortDesc TEXT NOT NULL,
+    PostShortDesc TEXT,
     PostUrl TEXT NOT NULL
 );
 
