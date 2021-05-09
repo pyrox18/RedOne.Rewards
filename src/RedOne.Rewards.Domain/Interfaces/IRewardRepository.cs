@@ -7,5 +7,6 @@ namespace RedOne.Rewards.Domain.Interfaces
     public interface IRewardRepository
     {
         Task<IEnumerable<Reward>> GetRewardsAsync(bool sortByMemberLevel = false);
+        Task<Reward> InsertAsync(Reward reward);
     }
 }

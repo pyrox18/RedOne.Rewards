@@ -7,5 +7,6 @@ namespace RedOne.Rewards.Application.Interfaces
     public interface IRewardService
     {
         Task<IEnumerable<RewardDto>> GetRewardsAsync();
+        Task<RewardDto> CreateRewardAsync(CreateRewardDto dto);
     }
 }

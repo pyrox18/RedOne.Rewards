@@ -7,5 +7,6 @@ namespace RedOne.Rewards.Domain.Interfaces
     {
         Task InsertAsync(MemberLevel memberLevel);
         Task<bool> IsEmptyAsync();
+        Task<MemberLevel> GetMemberLevelByLevelAsync(int level);
     }
 }

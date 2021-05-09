@@ -6,6 +6,9 @@ namespace RedOne.Rewards.Application.Dtos
 {
     public class RewardDto
     {
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
         [JsonPropertyName("title")]
         public string Title { get; set; }
 
@@ -19,7 +22,7 @@ namespace RedOne.Rewards.Application.Dtos
         public bool ExtraCashRequired { get; set; }
 
         [JsonPropertyName("extraCashAmount")]
-        public bool ExtraCashAmount { get; set; }
+        public int? ExtraCashAmount { get; set; }
 
         [JsonPropertyName("expiryDate")]
         public DateTimeOffset ExpiryDate { get; set; }
@@ -29,6 +32,7 @@ namespace RedOne.Rewards.Application.Dtos
 
         public RewardDto(Reward reward)
         {
+            Id = reward.Id;
             Title = reward.Title;
             Description = reward.Description;
             PointsRequired = reward.PointsRequired;

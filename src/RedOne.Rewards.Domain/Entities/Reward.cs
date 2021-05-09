@@ -8,7 +8,7 @@ namespace RedOne.Rewards.Domain.Entities
         public string Description { get; set; }
         public int PointsRequired { get; set; }
         public bool ExtraCashRequired { get; set; }
-        public bool ExtraCashAmount { get; set; }
+        public int? ExtraCashAmount { get; set; }
         public DateTimeOffset ExpiryDate { get; set; }
         public int MinimumMemberLevelId { get; set; }
         public int MinimumMemberLevel { get; set; }

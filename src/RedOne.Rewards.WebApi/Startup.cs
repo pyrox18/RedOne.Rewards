@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RedOne.Rewards.Application.Dtos;
 using RedOne.Rewards.Application.Interfaces;
 using RedOne.Rewards.Application.Services;
 using RedOne.Rewards.Domain.Interfaces;
@@ -67,7 +69,13 @@ namespace RedOne.Rewards.WebApi
                 });
 
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(x =>
+                {
+                    x.RegisterValidatorsFromAssemblyContaining<CreateRewardDtoValidator>();
+                    x.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RedOne.Rewards.WebApi", Version = "v1" });

@@ -34,5 +34,15 @@ namespace RedOne.Rewards.Infrastructure.Repositories
                 return count == 0;
             }
         }
+
+        public async Task<MemberLevel> GetMemberLevelByLevelAsync(int level)
+        {
+            var query = @"SELECT * FROM MemberLevel WHERE `Level` = @Level LIMIT 1";
+
+            using (var connection = DbConnection)
+            {
+                return await connection.QueryFirstOrDefaultAsync<MemberLevel>(query, new { Level = level });
+            }
+        }
     }
 }

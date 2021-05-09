@@ -26,5 +26,17 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
 
             return new JsonResult(result);
         }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(RewardDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> CreateReward([FromBody] CreateRewardDto dto)
+        {
+            var result = await _rewardService.CreateRewardAsync(dto);
+
+            return new JsonResult(result);
+        }
     }
 }
