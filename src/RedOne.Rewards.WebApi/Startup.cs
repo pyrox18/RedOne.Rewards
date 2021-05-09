@@ -36,12 +36,14 @@ namespace RedOne.Rewards.WebApi
             services.AddScoped<IConsumerUserRepository, ConsumerUserRepository>();
             services.AddScoped<IMemberLevelRepository, MemberLevelRepository>();
             services.AddScoped<IRewardRepository, RewardRepository>();
+            services.AddScoped<IBannerRepository, BannerRepository>();
 
             // Application services
             services.AddScoped<IAdminUserService, AdminUserService>();
             services.AddScoped<IConsumerUserService, ConsumerUserService>();
             services.AddScoped<IMemberLevelService, MemberLevelService>();
             services.AddScoped<IRewardService, RewardService>();
+            services.AddScoped<IBannerService, BannerService>();
 
             // App settings
             var appSettingsSection = Configuration.GetSection("AppSettings");
