@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,12 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RedOne.Rewards.Application.Dtos;
 using RedOne.Rewards.Application.Interfaces;
 using RedOne.Rewards.Application.Services;
 using RedOne.Rewards.Domain.Interfaces;
 using RedOne.Rewards.Infrastructure.Repositories;
 using RedOne.Rewards.WebApi.Authentication;
 using RedOne.Rewards.WebApi.Configuration;
+using RedOne.Rewards.WebApi.Middleware;
 using System.Text;
 
 namespace RedOne.Rewards.WebApi
@@ -31,10 +34,14 @@ namespace RedOne.Rewards.WebApi
             // Repositories
             services.AddScoped<IAdminUserRepository, AdminUserRepository>();
             services.AddScoped<IConsumerUserRepository, ConsumerUserRepository>();
+            services.AddScoped<IMemberLevelRepository, MemberLevelRepository>();
+            services.AddScoped<IRewardRepository, RewardRepository>();
 
             // Application services
             services.AddScoped<IAdminUserService, AdminUserService>();
             services.AddScoped<IConsumerUserService, ConsumerUserService>();
+            services.AddScoped<IMemberLevelService, MemberLevelService>();
+            services.AddScoped<IRewardService, RewardService>();
 
             // App settings
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -63,7 +70,13 @@ namespace RedOne.Rewards.WebApi
                 });
 
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(x =>
+                {
+                    x.RegisterValidatorsFromAssemblyContaining<CreateRewardDtoValidator>();
+                    x.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RedOne.Rewards.WebApi", Version = "v1" });
@@ -86,6 +99,8 @@ namespace RedOne.Rewards.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCustomExceptionHandler();
 
             app.UseEndpoints(endpoints =>
             {

@@ -27,6 +27,9 @@ namespace RedOne.Rewards.WebApi
 
                     var consumerUserService = services.GetRequiredService<IConsumerUserService>();
                     await consumerUserService.SeedConsumerUserDataAsync();
+
+                    var memberLevelService = services.GetRequiredService<IMemberLevelService>();
+                    await memberLevelService.SeedMemberLevelDataAsync();
                 }
 
                 Console.ForegroundColor = ConsoleColor.Green;
