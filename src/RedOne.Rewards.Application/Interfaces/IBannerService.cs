@@ -7,5 +7,6 @@ namespace RedOne.Rewards.Application.Interfaces
     public interface IBannerService
     {
         Task<IEnumerable<BannerDto>> GetBannersAsync();
+        Task<BannerDto> CreateBannerAsync(CreateBannerDto dto);
     }
 }

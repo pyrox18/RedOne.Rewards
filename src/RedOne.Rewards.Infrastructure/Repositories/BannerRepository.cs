@@ -23,5 +23,20 @@ namespace RedOne.Rewards.Infrastructure.Repositories
                 return await connection.QueryAsync<Banner>(query);
             }
         }
+
+        public async Task<Banner> InsertAsync(Banner banner)
+        {
+            var query = @"INSERT INTO Banner(PostCoverUrl, PostTitle, PostShortDesc, PostUrl)
+                          VALUES (@PostCoverUrl, @PostTitle, @PostShortDesc, @PostUrl);
+                          SELECT LAST_INSERT_ID();";
+            var returnQuery = @"SELECT * FROM Banner
+                                WHERE Id = @Id";
+
+            using (var connection = DbConnection)
+            {
+                var id = await connection.ExecuteScalarAsync<int>(query, banner);
+                return await connection.QueryFirstOrDefaultAsync<Banner>(returnQuery, new { Id = id });
+            }
+        }
     }
 }

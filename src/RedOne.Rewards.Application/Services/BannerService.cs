@@ -22,5 +22,12 @@ namespace RedOne.Rewards.Application.Services
 
             return result.Select(r => new BannerDto(r));
         }
+
+        public async Task<BannerDto> CreateBannerAsync(CreateBannerDto dto)
+        {
+            var result = await _bannerRepository.InsertAsync(dto.ToBanner());
+
+            return new BannerDto(result);
+        }
     }
 }
