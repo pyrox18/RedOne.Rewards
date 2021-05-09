@@ -8,5 +8,6 @@ namespace RedOne.Rewards.Application.Interfaces
     {
         Task<IEnumerable<BannerDto>> GetBannersAsync();
         Task<BannerDto> CreateBannerAsync(CreateBannerDto dto);
+        Task DeleteBannerAsync(int id);
     }
 }

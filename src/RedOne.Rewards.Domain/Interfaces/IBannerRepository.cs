@@ -8,5 +8,7 @@ namespace RedOne.Rewards.Domain.Interfaces
     {
         Task<IEnumerable<Banner>> GetAllAsync();
         Task<Banner> InsertAsync(Banner banner);
+        Task<bool> ExistsAsync(int id);
+        Task DeleteByIdAsync(int id);
     }
 }

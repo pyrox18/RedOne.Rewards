@@ -38,5 +38,17 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
 
             return new JsonResult(result);
         }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteReward([FromRoute] int id)
+        {
+            await _bannerService.DeleteBannerAsync(id);
+
+            return NoContent();
+        }
     }
 }

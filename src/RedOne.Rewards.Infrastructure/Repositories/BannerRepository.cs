@@ -38,5 +38,25 @@ namespace RedOne.Rewards.Infrastructure.Repositories
                 return await connection.QueryFirstOrDefaultAsync<Banner>(returnQuery, new { Id = id });
             }
         }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            var query = @"SELECT EXISTS(SELECT true FROM Banner WHERE Id = @Id)";
+
+            using (var connection = DbConnection)
+            {
+                return await connection.ExecuteScalarAsync<bool>(query, new { Id = id });
+            }
+        }
+
+        public async Task DeleteByIdAsync(int id)
+        {
+            var query = @"DELETE FROM Banner where Id = @Id";
+
+            using (var connection = DbConnection)
+            {
+                await connection.ExecuteAsync(query, new { Id = id });
+            }
+        }
     }
 }
