@@ -21,9 +21,9 @@ namespace RedOne.Rewards.Application.Services
             _memberLevelRepository = memberLevelRepository;
         }
 
-        public async Task<IEnumerable<RewardDto>> GetRewardsAsync()
+        public async Task<IEnumerable<RewardDto>> GetRewardsAsync(bool sortByMemberLevel = false)
         {
-            var rewards = await _rewardRepository.GetRewardsAsync();
+            var rewards = await _rewardRepository.GetRewardsAsync(sortByMemberLevel);
 
             return rewards.Select(r => new RewardDto(r));
         }
