@@ -41,5 +41,13 @@ namespace RedOne.Rewards.Application.Services
 
             return new RewardDto(resultEntity);
         }
+
+        public async Task DeleteRewardAsync(int id)
+        {
+            if (!await _rewardRepository.ExistsAsync(id))
+                throw new NotFoundException($"Reward with ID {id} not found.");
+
+            await _rewardRepository.DeleteByIdAsync(id);
+        }
     }
 }

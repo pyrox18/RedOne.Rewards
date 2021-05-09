@@ -8,5 +8,7 @@ namespace RedOne.Rewards.Domain.Interfaces
     {
         Task<IEnumerable<Reward>> GetRewardsAsync(bool sortByMemberLevel = false);
         Task<Reward> InsertAsync(Reward reward);
+        Task<bool> ExistsAsync(int id);
+        Task DeleteByIdAsync(int id);
     }
 }

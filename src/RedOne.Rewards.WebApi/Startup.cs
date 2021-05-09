@@ -14,6 +14,7 @@ using RedOne.Rewards.Domain.Interfaces;
 using RedOne.Rewards.Infrastructure.Repositories;
 using RedOne.Rewards.WebApi.Authentication;
 using RedOne.Rewards.WebApi.Configuration;
+using RedOne.Rewards.WebApi.Middleware;
 using System.Text;
 
 namespace RedOne.Rewards.WebApi
@@ -98,6 +99,8 @@ namespace RedOne.Rewards.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCustomExceptionHandler();
 
             app.UseEndpoints(endpoints =>
             {
