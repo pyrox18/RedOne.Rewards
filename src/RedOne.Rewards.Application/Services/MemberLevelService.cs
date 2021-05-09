@@ -1,7 +1,9 @@
-﻿using RedOne.Rewards.Application.Interfaces;
+﻿using RedOne.Rewards.Application.Dtos;
+using RedOne.Rewards.Application.Interfaces;
 using RedOne.Rewards.Domain.Entities;
 using RedOne.Rewards.Domain.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RedOne.Rewards.Application.Services
@@ -13,6 +15,13 @@ namespace RedOne.Rewards.Application.Services
         public MemberLevelService(IMemberLevelRepository memberLevelRepository)
         {
             _memberLevelRepository = memberLevelRepository;
+        }
+
+        public async Task<IEnumerable<MemberLevelDto>> GetMemberLevelsAsync()
+        {
+            var result = await _memberLevelRepository.GetMemberLevelsAsync();
+
+            return result.Select(r => new MemberLevelDto(r));
         }
 
         public async Task SeedMemberLevelDataAsync()
