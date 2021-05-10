@@ -12,18 +12,21 @@ namespace RedOne.Rewards.Application.Services
     {
         private readonly IRewardRepository _rewardRepository;
         private readonly IMemberLevelRepository _memberLevelRepository;
+        private readonly IRewardRedemptionRepository _rewardRedemptionRepository;
 
         public RewardService(
             IRewardRepository rewardRepository,
-            IMemberLevelRepository memberLevelRepository)
+            IMemberLevelRepository memberLevelRepository,
+            IRewardRedemptionRepository rewardRedemptionRepository)
         {
             _rewardRepository = rewardRepository;
             _memberLevelRepository = memberLevelRepository;
+            _rewardRedemptionRepository = rewardRedemptionRepository;
         }
 
-        public async Task<IEnumerable<RewardDto>> GetRewardsAsync()
+        public async Task<IEnumerable<RewardDto>> GetRewardsAsync(bool sortByMemberLevel = false)
         {
-            var rewards = await _rewardRepository.GetRewardsAsync();
+            var rewards = await _rewardRepository.GetRewardsAsync(sortByMemberLevel);
 
             return rewards.Select(r => new RewardDto(r));
         }
@@ -48,6 +51,39 @@ namespace RedOne.Rewards.Application.Services
                 throw new NotFoundException($"Reward with ID {id} not found.");
 
             await _rewardRepository.DeleteByIdAsync(id);
+        }
+
+        public async Task<ConsumerUserRewardInfoDto> GetConsumerUserRewardInfoAsync(string phoneNumber)
+        {
+            var result = await _rewardRepository.GetConsumerUserRewardInfoAsync(phoneNumber);
+
+            return new ConsumerUserRewardInfoDto(result);
+        }
+
+        public async Task RedeemRewardAsync(string userPhoneNumber, int rewardId)
+        {
+            var returnValue = await _rewardRedemptionRepository.RedeemRewardAsync(userPhoneNumber, rewardId);
+
+            switch (returnValue)
+            {
+                case -10:
+                    throw new NotFoundException($"Consumer user with phone number {userPhoneNumber} not found.");
+                case -20:
+                    throw new BadRequestException("Consumer user has 0 reward points.");
+                case -30:
+                    throw new BadRequestException("Consumer user does not meet the minimum member level required for this reward.");
+                case -40:
+                    throw new BadRequestException("Consumer user does not have enough points for this reward.");
+                case -50:
+                    throw new NotFoundException($"Reward with ID {rewardId} not found.");
+            }
+        }
+
+        public async Task<IEnumerable<RewardRedemptionDto>> GetConsumerUserRewardRedemptionsAsync(string phoneNumber)
+        {
+            var result = await _rewardRedemptionRepository.GetRewardRedemptionsAsync(phoneNumber);
+
+            return result.Select(r => new RewardRedemptionDto(r));
         }
     }
 }

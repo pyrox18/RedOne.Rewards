@@ -3,6 +3,7 @@ using RedOne.Rewards.Domain.Interfaces;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Dapper;
+using System.Collections.Generic;
 
 namespace RedOne.Rewards.Infrastructure.Repositories
 {
@@ -42,6 +43,17 @@ namespace RedOne.Rewards.Infrastructure.Repositories
             using (var connection = DbConnection)
             {
                 return await connection.QueryFirstOrDefaultAsync<MemberLevel>(query, new { Level = level });
+            }
+        }
+
+        public async Task<IEnumerable<MemberLevel>> GetMemberLevelsAsync()
+        {
+            var query = @"SELECT * FROM MemberLevel
+                          ORDER BY `Level`";
+
+            using (var connection = DbConnection)
+            {
+                return await connection.QueryAsync<MemberLevel>(query);
             }
         }
     }

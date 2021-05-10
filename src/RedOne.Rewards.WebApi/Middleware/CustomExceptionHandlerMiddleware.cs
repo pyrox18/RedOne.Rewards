@@ -37,6 +37,10 @@ namespace RedOne.Rewards.WebApi.Middleware
 
             switch (exception)
             {
+                case BadRequestException ex:
+                    code = StatusCodes.Status400BadRequest;
+                    result = ex.Message;
+                    break;
                 case NotFoundException ex:
                     code = StatusCodes.Status404NotFound;
                     result = ex.Message;
@@ -44,7 +48,7 @@ namespace RedOne.Rewards.WebApi.Middleware
             }
 
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)code;
+            context.Response.StatusCode = code;
 
             if (result == string.Empty)
             {
