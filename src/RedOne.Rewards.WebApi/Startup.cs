@@ -38,6 +38,7 @@ namespace RedOne.Rewards.WebApi
             services.AddScoped<IRewardRepository, RewardRepository>();
             services.AddScoped<IBannerRepository, BannerRepository>();
             services.AddScoped<IUsageRepository, UsageRepository>();
+            services.AddScoped<IRewardRedemptionRepository, RewardRedemptionRepository>();
 
             // Application services
             services.AddScoped<IAdminUserService, AdminUserService>();

@@ -10,5 +10,6 @@ namespace RedOne.Rewards.Application.Interfaces
         Task<RewardDto> CreateRewardAsync(CreateRewardDto dto);
         Task DeleteRewardAsync(int id);
         Task<ConsumerUserRewardInfoDto> GetConsumerUserRewardInfoAsync(string phoneNumber);
+        Task RedeemRewardAsync(string userPhoneNumber, int rewardId);
     }
 }

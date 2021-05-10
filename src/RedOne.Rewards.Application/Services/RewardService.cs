@@ -12,13 +12,16 @@ namespace RedOne.Rewards.Application.Services
     {
         private readonly IRewardRepository _rewardRepository;
         private readonly IMemberLevelRepository _memberLevelRepository;
+        private readonly IRewardRedemptionRepository _rewardRedemptionRepository;
 
         public RewardService(
             IRewardRepository rewardRepository,
-            IMemberLevelRepository memberLevelRepository)
+            IMemberLevelRepository memberLevelRepository,
+            IRewardRedemptionRepository rewardRedemptionRepository)
         {
             _rewardRepository = rewardRepository;
             _memberLevelRepository = memberLevelRepository;
+            _rewardRedemptionRepository = rewardRedemptionRepository;
         }
 
         public async Task<IEnumerable<RewardDto>> GetRewardsAsync(bool sortByMemberLevel = false)
@@ -55,6 +58,25 @@ namespace RedOne.Rewards.Application.Services
             var result = await _rewardRepository.GetConsumerUserRewardInfoAsync(phoneNumber);
 
             return new ConsumerUserRewardInfoDto(result);
+        }
+
+        public async Task RedeemRewardAsync(string userPhoneNumber, int rewardId)
+        {
+            var returnValue = await _rewardRedemptionRepository.RedeemRewardAsync(userPhoneNumber, rewardId);
+
+            switch (returnValue)
+            {
+                case -10:
+                    throw new NotFoundException($"Consumer user with phone number {userPhoneNumber} not found.");
+                case -20:
+                    throw new BadRequestException("Consumer user has 0 reward points.");
+                case -30:
+                    throw new BadRequestException("Consumer user does not meet the minimum member level required for this reward.");
+                case -40:
+                    throw new BadRequestException("Consumer user does not have enough points for this reward.");
+                case -50:
+                    throw new NotFoundException($"Reward with ID {rewardId} not found.");
+            }
         }
     }
 }

@@ -60,5 +60,21 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
 
             return new JsonResult(result);
         }
+
+        [HttpPost("{id}/redeem")]
+        [SwaggerOperation(Tags = new[] { "Rewards (Consumer)" })]
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Reward redemption successful")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Unable to redeem reward (see error message for description)")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not a consumer user")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Consumer user or reward not found")]
+        public async Task<IActionResult> RedeemReward([FromRoute] int id)
+        {
+            var claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+
+            await _rewardService.RedeemRewardAsync(claim.Value, id);
+
+            return new NoContentResult();
+        }
     }
 }
