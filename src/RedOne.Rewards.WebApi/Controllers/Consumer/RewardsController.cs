@@ -76,5 +76,19 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
 
             return new NoContentResult();
         }
+
+        [HttpGet("redemptions")]
+        [SwaggerOperation(Tags = new[] { "Rewards (Consumer)" })]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the consumer user's previous reward redemptions", typeof(IEnumerable<RewardRedemptionDto>))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not a consumer user")]
+        public async Task<IActionResult> GetRewardRedemptions()
+        {
+            var claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+
+            var result = await _rewardService.GetConsumerUserRewardRedemptionsAsync(claim.Value);
+
+            return new JsonResult(result);
+        }
     }
 }

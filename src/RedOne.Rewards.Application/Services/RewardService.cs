@@ -78,5 +78,12 @@ namespace RedOne.Rewards.Application.Services
                     throw new NotFoundException($"Reward with ID {rewardId} not found.");
             }
         }
+
+        public async Task<IEnumerable<RewardRedemptionDto>> GetConsumerUserRewardRedemptionsAsync(string phoneNumber)
+        {
+            var result = await _rewardRedemptionRepository.GetRewardRedemptionsAsync(phoneNumber);
+
+            return result.Select(r => new RewardRedemptionDto(r));
+        }
     }
 }

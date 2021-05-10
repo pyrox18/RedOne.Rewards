@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Dapper;
 using System.Data;
+using System.Collections.Generic;
+using RedOne.Rewards.Domain.Entities;
 
 namespace RedOne.Rewards.Infrastructure.Repositories
 {
@@ -11,6 +13,20 @@ namespace RedOne.Rewards.Infrastructure.Repositories
         public RewardRedemptionRepository(IConfiguration configuration) :
             base(configuration)
         {
+        }
+
+        public async Task<IEnumerable<RewardRedemption>> GetRewardRedemptionsAsync(string userPhoneNumber)
+        {
+            var query = @"SELECT rr.Id, rr.RewardTitle, rr.PointsSpent, rr.ExtraCashSpent, rr.RedemptionDate
+                          FROM RewardRedemption rr
+                          JOIN ConsumerUser cu ON cu.Id = rr.ConsumerUserId
+                          WHERE cu.PhoneNumber = @PhoneNumber
+                          ORDER BY rr.RedemptionDate DESC";
+
+            using (var connection = DbConnection)
+            {
+                return await connection.QueryAsync<RewardRedemption>(query, new { PhoneNumber = userPhoneNumber });
+            }
         }
 
         /// <summary>
