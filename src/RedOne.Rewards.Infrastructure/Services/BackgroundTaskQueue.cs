@@ -1,9 +1,10 @@
-﻿using System;
+﻿using RedOne.Rewards.Infrastructure.Interfaces;
+using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RedOne.Rewards.BackgroundQueue
+namespace RedOne.Rewards.Infrastructure.Services
 {
     public class BackgroundTaskQueue : IBackgroundTaskQueue
     {

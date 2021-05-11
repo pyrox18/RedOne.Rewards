@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RedOne.Rewards.BackgroundQueue
+namespace RedOne.Rewards.Infrastructure.Interfaces
 {
     public interface IBackgroundTaskQueue
     {

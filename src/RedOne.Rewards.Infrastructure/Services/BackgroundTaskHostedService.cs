@@ -1,15 +1,24 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RedOne.Rewards.Infrastructure.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RedOne.Rewards.BackgroundQueue
+namespace RedOne.Rewards.Infrastructure.Services
 {
     public class BackgroundTaskHostedService : BackgroundService
     {
         private readonly ILogger _logger;
         private readonly IBackgroundTaskQueue _backgroundTaskQueue;
+
+        public BackgroundTaskHostedService(
+            ILogger logger,
+            IBackgroundTaskQueue backgroundTaskQueue)
+        {
+            _logger = logger;
+            _backgroundTaskQueue = backgroundTaskQueue;
+        }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
