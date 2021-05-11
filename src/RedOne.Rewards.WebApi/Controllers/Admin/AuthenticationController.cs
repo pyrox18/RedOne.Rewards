@@ -23,9 +23,11 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status401Unauthorized)]
-        [SwaggerOperation(Tags = new[] { "Authentication (Admin)" })]
+        [SwaggerOperation(
+            Summary = "Authenticates an admin user with a bearer token",
+            Tags = new[] { "Authentication (Admin)" })]
+        [SwaggerResponse(StatusCodes.Status200OK, "Authentication token for the admin user", typeof(TokenDto))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Invalid user credentials", typeof(ErrorDto))]
         public async Task<IActionResult> AuthenticateUser([FromBody] AuthenticateAdminUserDto dto)
         {
             var isAuthenticated = await _adminUserService.AuthenticateUserAsync(dto);

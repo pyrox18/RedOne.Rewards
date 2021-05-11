@@ -25,9 +25,11 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status401Unauthorized)]
-        [SwaggerOperation(Tags = new[] { "Authentication (Consumer)" })]
+        [SwaggerOperation(
+            Summary = "Authenticates a consumer user with a bearer token",
+            Tags = new[] { "Authentication (Consumer)" })]
+        [SwaggerResponse(StatusCodes.Status200OK, "Authentication token for the consumer user", typeof(TokenDto))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Invalid user credentials", typeof(ErrorDto))]
         public async Task<IActionResult> AuthenticateUser([FromBody] AuthenticateConsumerUserDto dto)
         {
             var isAuthenticated = await _consumerUserService.AuthenticateUserAsync(dto);

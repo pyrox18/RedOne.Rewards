@@ -24,7 +24,9 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
         }
 
         [HttpGet]
-        [SwaggerOperation(Tags = new[] { "Rewards (Consumer)" })]
+        [SwaggerOperation(
+            Summary = "Gets available rewards sorted by member level",
+            Tags = new[] { "Rewards (Consumer)" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns rewards sorted by member level", typeof(IEnumerable<RewardDto>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not a consumer user")]
@@ -36,7 +38,10 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
         }
 
         [HttpGet("user")]
-        [SwaggerOperation(Tags = new[] { "Rewards (Consumer)" })]
+        [SwaggerOperation(
+            Summary = "Gets the consumer user's current reward info",
+            Description = "Gets data on the consumer user's current total points and member level.",
+            Tags = new[] { "Rewards (Consumer)" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns reward info for current user", typeof(ConsumerUserRewardInfoDto))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not a consumer user")]
@@ -50,7 +55,9 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
         }
 
         [HttpGet("member-levels")]
-        [SwaggerOperation(Tags = new[] { "Rewards (Consumer)" })]
+        [SwaggerOperation(
+            Summary = "Gets all available member levels",
+            Tags = new[] { "Rewards (Consumer)" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns all member levels", typeof(IEnumerable<MemberLevelDto>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not a consumer user")]
@@ -62,7 +69,9 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
         }
 
         [HttpPost("{id}/redeem")]
-        [SwaggerOperation(Tags = new[] { "Rewards (Consumer)" })]
+        [SwaggerOperation(
+            Summary = "Redeems a reward for the consumer user",
+            Tags = new[] { "Rewards (Consumer)" })]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Reward redemption successful")]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Unable to redeem reward (see error message for description)")]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
@@ -78,7 +87,9 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
         }
 
         [HttpGet("redemptions")]
-        [SwaggerOperation(Tags = new[] { "Rewards (Consumer)" })]
+        [SwaggerOperation(
+            Summary = "Gets all previous reward redemptions",
+            Tags = new[] { "Rewards (Consumer)" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the consumer user's previous reward redemptions", typeof(IEnumerable<RewardRedemptionDto>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not a consumer user")]
