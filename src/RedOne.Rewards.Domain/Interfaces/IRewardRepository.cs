@@ -12,5 +12,6 @@ namespace RedOne.Rewards.Domain.Interfaces
         Task<bool> ExistsAsync(int id);
         Task DeleteByIdAsync(int id);
         Task<ConsumerUserRewardInfoSpModel> GetConsumerUserRewardInfoAsync(string phoneNumber);
+        Task<Reward> GetByIdAsync(int id);
     }
 }

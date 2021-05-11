@@ -82,5 +82,19 @@ namespace RedOne.Rewards.Infrastructure.Repositories
                     commandType: CommandType.StoredProcedure);
             }
         }
+
+        public async Task<Reward> GetByIdAsync(int id)
+        {
+            var query = @"SELECT r.Id, r.Title, r.`Description`, r.PointsRequired, r.ExtraCashRequired,
+                          r.ExtraCashAmount, r.ExpiryDate, ml.Level AS MinimumMemberLevel
+                          FROM Reward r
+                          JOIN MemberLevel ml ON r.MinimumMemberLevelId = ml.Id
+                          WHERE r.Id = @Id";
+
+            using (var connection = DbConnection)
+            {
+                return await connection.QuerySingleOrDefaultAsync<Reward>(query, new { Id = id });
+            }
+        }
     }
 }

@@ -9,11 +9,11 @@ namespace RedOne.Rewards.Infrastructure.Services
 {
     public class BackgroundTaskHostedService : BackgroundService
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<BackgroundTaskHostedService> _logger;
         private readonly IBackgroundTaskQueue _backgroundTaskQueue;
 
         public BackgroundTaskHostedService(
-            ILogger logger,
+            ILogger<BackgroundTaskHostedService> logger,
             IBackgroundTaskQueue backgroundTaskQueue)
         {
             _logger = logger;
@@ -28,13 +28,16 @@ namespace RedOne.Rewards.Infrastructure.Services
             {
                 var workItem = await _backgroundTaskQueue.DequeueAsync(stoppingToken);
 
-                try
+                if (!(workItem is null))
                 {
-                    await workItem(stoppingToken);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, $"Error occurred while executing {nameof(workItem)}.");
+                    try
+                    {
+                        await workItem(stoppingToken);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, $"Error occurred while executing {nameof(workItem)}.");
+                    }
                 }
             }
         }
