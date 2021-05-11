@@ -48,7 +48,7 @@ namespace RedOne.Rewards.Application.Services
                     IsActive = true,
                     IsIDDActivated = false,
                     IsRoamingActivated = false,
-                    TotalRewardPoints = 0
+                    TotalRewardPoints = 2000
                 };
 
                 await _consumerUserRepository.InsertAsync(user);
