@@ -2,6 +2,8 @@
 using RedOne.Rewards.Application.Exceptions;
 using RedOne.Rewards.Application.Interfaces;
 using RedOne.Rewards.Domain.Interfaces;
+using RedOne.Rewards.Infrastructure.Factories;
+using RedOne.Rewards.Infrastructure.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,15 +15,24 @@ namespace RedOne.Rewards.Application.Services
         private readonly IRewardRepository _rewardRepository;
         private readonly IMemberLevelRepository _memberLevelRepository;
         private readonly IRewardRedemptionRepository _rewardRedemptionRepository;
+        private readonly IConsumerUserRepository _consumerUserRepository;
+        private readonly IBackgroundTaskQueue _backgroundTaskQueue;
+        private readonly IMockBackgroundTaskFactory _mockBackgroundTaskFactory;
 
         public RewardService(
             IRewardRepository rewardRepository,
             IMemberLevelRepository memberLevelRepository,
-            IRewardRedemptionRepository rewardRedemptionRepository)
+            IRewardRedemptionRepository rewardRedemptionRepository,
+            IConsumerUserRepository consumerUserRepository,
+            IBackgroundTaskQueue backgroundTaskQueue,
+            IMockBackgroundTaskFactory mockBackgroundTaskFactory)
         {
             _rewardRepository = rewardRepository;
             _memberLevelRepository = memberLevelRepository;
             _rewardRedemptionRepository = rewardRedemptionRepository;
+            _consumerUserRepository = consumerUserRepository;
+            _backgroundTaskQueue = backgroundTaskQueue;
+            _mockBackgroundTaskFactory = mockBackgroundTaskFactory;
         }
 
         public async Task<IEnumerable<RewardDto>> GetRewardsAsync(bool sortByMemberLevel = false)
@@ -77,6 +88,16 @@ namespace RedOne.Rewards.Application.Services
                 case -50:
                     throw new NotFoundException($"Reward with ID {rewardId} not found.");
             }
+
+            var user = await _consumerUserRepository.GetConsumerUserByPhoneNumberAsync(userPhoneNumber);
+            var reward = await _rewardRepository.GetByIdAsync(rewardId);
+
+            var backgroundTask = _mockBackgroundTaskFactory.CreateMockRewardRedemptionEmailTask(
+                user.EmailAddress,
+                reward.Title,
+                reward.PointsRequired);
+
+            _backgroundTaskQueue.QueueBackgroundWorkItem(backgroundTask);
         }
 
         public async Task<IEnumerable<RewardRedemptionDto>> GetConsumerUserRewardRedemptionsAsync(string phoneNumber)

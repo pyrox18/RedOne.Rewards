@@ -11,7 +11,10 @@ using RedOne.Rewards.Application.Dtos;
 using RedOne.Rewards.Application.Interfaces;
 using RedOne.Rewards.Application.Services;
 using RedOne.Rewards.Domain.Interfaces;
+using RedOne.Rewards.Infrastructure.Factories;
+using RedOne.Rewards.Infrastructure.Interfaces;
 using RedOne.Rewards.Infrastructure.Repositories;
+using RedOne.Rewards.Infrastructure.Services;
 using RedOne.Rewards.WebApi.Authentication;
 using RedOne.Rewards.WebApi.Configuration;
 using RedOne.Rewards.WebApi.Middleware;
@@ -47,6 +50,13 @@ namespace RedOne.Rewards.WebApi
             services.AddScoped<IRewardService, RewardService>();
             services.AddScoped<IBannerService, BannerService>();
             services.AddScoped<IUsageService, UsageService>();
+            services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+
+            // Factories
+            services.AddScoped<IMockBackgroundTaskFactory, MockBackgroundTaskFactory>();
+
+            // Hosted services
+            services.AddHostedService<BackgroundTaskHostedService>();
 
             // App settings
             var appSettingsSection = Configuration.GetSection("AppSettings");
