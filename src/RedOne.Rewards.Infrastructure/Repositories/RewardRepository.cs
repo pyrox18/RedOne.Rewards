@@ -74,11 +74,17 @@ namespace RedOne.Rewards.Infrastructure.Repositories
 
         public async Task<ConsumerUserRewardInfoSpModel> GetConsumerUserRewardInfoAsync(string phoneNumber)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("PhoneNumber", phoneNumber);
+            parameters.Add("TotalPoints", direction: ParameterDirection.Output);
+            parameters.Add("MemberLevel", direction: ParameterDirection.Output);
+            parameters.Add("MemberLevelText", direction: ParameterDirection.Output);
+
             using (var connection = DbConnection)
             {
                 return await connection.QuerySingleOrDefaultAsync<ConsumerUserRewardInfoSpModel>(
                     "GetUserRewardInfo",
-                    new { PhoneNumber = phoneNumber },
+                    parameters,
                     commandType: CommandType.StoredProcedure);
             }
         }

@@ -67,13 +67,12 @@ CREATE TABLE RewardRedemption(
 DELIMITER $$
 
 CREATE PROCEDURE GetUserRewardInfo(
-	IN PhoneNumber VARCHAR(12)
+	IN PhoneNumber VARCHAR(12),
+    OUT TotalPoints INT,
+    OUT MemberLevel INT,
+    OUT MemberLevelText VARCHAR(255)
 )
 BEGIN
-	DECLARE TotalPoints INT DEFAULT 0;
-    DECLARE MemberLevel INT DEFAULT 0;
-    DECLARE MemberLevelText VARCHAR(255);
-
 	SELECT TotalRewardPoints INTO TotalPoints FROM ConsumerUser cu WHERE cu.PhoneNumber = PhoneNumber;
     SELECT `Level`, LevelText INTO MemberLevel, MemberLevelText FROM MemberLevel
     WHERE TotalPoints >= Threshold
