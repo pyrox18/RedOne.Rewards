@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="MySqlConnector" Version="1.3.8" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RedOne.Rewards.Domain\RedOne.Rewards.Domain.csproj" />
   </ItemGroup>
 

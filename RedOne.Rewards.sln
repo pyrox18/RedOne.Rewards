@@ -5,17 +5,19 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{87339E8B-84D4-4BFA-8368-90227F38695B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedOne.Rewards.WebApi", "src\RedOne.Rewards.WebApi\RedOne.Rewards.WebApi.csproj", "{F2B42CE8-D11F-4B1C-96CD-E19BDF13C3F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedOne.Rewards.WebApi", "src\RedOne.Rewards.WebApi\RedOne.Rewards.WebApi.csproj", "{F2B42CE8-D11F-4B1C-96CD-E19BDF13C3F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedOne.Rewards.Domain", "src\RedOne.Rewards.Domain\RedOne.Rewards.Domain.csproj", "{F90C557D-484F-4E2D-8A74-C387D870BB70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedOne.Rewards.Domain", "src\RedOne.Rewards.Domain\RedOne.Rewards.Domain.csproj", "{F90C557D-484F-4E2D-8A74-C387D870BB70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedOne.Rewards.Application", "src\RedOne.Rewards.Application\RedOne.Rewards.Application.csproj", "{F6F6E569-34BD-4B11-A752-02F8F78D8583}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedOne.Rewards.Application", "src\RedOne.Rewards.Application\RedOne.Rewards.Application.csproj", "{F6F6E569-34BD-4B11-A752-02F8F78D8583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedOne.Rewards.Infrastructure", "src\RedOne.Rewards.Infrastructure\RedOne.Rewards.Infrastructure.csproj", "{0E05E5D4-2D73-495E-B703-E9051B9675A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedOne.Rewards.Infrastructure", "src\RedOne.Rewards.Infrastructure\RedOne.Rewards.Infrastructure.csproj", "{0E05E5D4-2D73-495E-B703-E9051B9675A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3AC70D68-886F-4CDA-A54C-F22EF665778C}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		db-backup.sql = db-backup.sql
+		db-schema.sql = db-schema.sql
 		README.md = README.md
 	EndProjectSection
 EndProject

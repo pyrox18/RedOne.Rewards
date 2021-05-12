@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CryptoHelper" Version="3.0.2" />
+    <PackageReference Include="FluentValidation" Version="10.1.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RedOne.Rewards.Domain\RedOne.Rewards.Domain.csproj" />
     <ProjectReference Include="..\RedOne.Rewards.Infrastructure\RedOne.Rewards.Infrastructure.csproj" />
   </ItemGroup>
