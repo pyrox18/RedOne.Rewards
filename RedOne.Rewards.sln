@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3AC70D68-886F-4CDA-A54C-F22EF665778C}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		db-backup.sql = db-backup.sql
 		db-schema.sql = db-schema.sql
 		README.md = README.md
 	EndProjectSection
