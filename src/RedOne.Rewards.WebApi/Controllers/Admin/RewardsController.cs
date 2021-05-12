@@ -18,10 +18,12 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<RewardDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [SwaggerOperation(Tags = new[] { "Rewards (Admin)" })]
+        [SwaggerOperation(
+            Summary = "Gets the current list of available rewards",
+            Tags = new[] { "Rewards (Admin)" })]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the current list of rewards", typeof(IEnumerable<RewardDto>))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not an admin user")]
         public async Task<IActionResult> RewardsList()
         {
             var result = await _rewardService.GetRewardsAsync();
@@ -30,11 +32,13 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(RewardDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [SwaggerOperation(Tags = new[] { "Rewards (Admin)" })]
+        [SwaggerOperation(
+            Summary = "Creates a new reward",
+            Tags = new[] { "Rewards (Admin)" })]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns the created reward", typeof(RewardDto))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid body")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not an admin user")]
         public async Task<IActionResult> CreateReward([FromBody] CreateRewardDto dto)
         {
             var result = await _rewardService.CreateRewardAsync(dto);
@@ -43,11 +47,13 @@ namespace RedOne.Rewards.WebApi.Controllers.Admin
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [SwaggerOperation(Tags = new[] { "Rewards (Admin)" })]
+        [SwaggerOperation(
+            Summary = "Deletes an existing reward",
+            Tags = new[] { "Rewards (Admin)" })]
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Indicates a successful deletion")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not an admin user")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Reward with the given ID was not found")]
         public async Task<IActionResult> DeleteReward([FromRoute] int id)
         {
             await _rewardService.DeleteRewardAsync(id);

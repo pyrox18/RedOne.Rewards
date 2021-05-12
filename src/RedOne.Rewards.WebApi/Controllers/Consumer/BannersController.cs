@@ -17,7 +17,9 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
         }
 
         [HttpGet]
-        [SwaggerOperation(Tags = new[] { "Banners (Consumer)" })]
+        [SwaggerOperation(
+            Summary = "Gets the current list of available banners",
+            Tags = new[] { "Banners (Consumer)" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns banners", typeof(BannerDto))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not a consumer user")]

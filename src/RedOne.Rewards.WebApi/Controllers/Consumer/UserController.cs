@@ -19,7 +19,9 @@ namespace RedOne.Rewards.WebApi.Controllers.Consumer
         }
 
         [HttpGet("info")]
-        [SwaggerOperation(Tags = new[] { "User (Consumer)" })]
+        [SwaggerOperation(
+            Summary = "Gets the consumer user's information",
+            Tags = new[] { "User (Consumer)" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Returns the consumer user's information", typeof(ConsumerUserInfoDto))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated")]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authenticated but not a consumer user")]
